@@ -1,0 +1,14 @@
+.main-body{
+  padding: 81px 58px 0;
+}
+
+.filter-list{
+  display: flex; 
+  text-transform: uppercase;
+}
+
+.filter-list li{
+  margin-right: 10px;
+  color: #969696;
+  font-size: 11px;
+}
