@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PhotoIndex } from "./photos/photo_index";
 
 export const Body = () => {
   const [filter, setFilter] = useState(null);
@@ -10,6 +11,7 @@ export const Body = () => {
         <li onClick={() => setFilter(1)}>Category 1</li>
         <li onClick={() => setFilter(2)}>Category 2</li>
       </ul>
+      <PhotoIndex filter={filter} /> 
     </div>
   );
 };

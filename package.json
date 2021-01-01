@@ -15,10 +15,12 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
+  "proxy": "http://localhost:5000",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --mode=development --watch"
+    "webpack": "webpack --mode=development --watch",
+    "start-api": "cd api && venv/bin/flask run --no-debugger"
   },
   "repository": {
     "type": "git",

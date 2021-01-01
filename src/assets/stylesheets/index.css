@@ -1,0 +1,10 @@
+.photo-index{
+  width: 100%;
+  display: flex;
+}
+
+.index-col{
+  width: 50%;
+  display: flex;
+  flex-direction: column; 
+}
