@@ -4,21 +4,29 @@ import { PhotoItem } from "./photo_item";
 
 export const PhotoIndex = ({filter}) => {
   const [photos, setPhotos] = useState([])
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/covers')
-      .then(res => res.json())
-      .then(res => {
-        let temp = [];
+    const fetchData = async () => {
+      setIsLoading(true);
+      console.log('fetching');
+      const res = await fetch('http://localhost:5000/api/covers')
+      const data = await res.json();
 
-        for(let album in res) { 
-          let link = res[album]
-          temp.push(<PhotoItem key={album} album={album} imgLink={link} />);
-        }
+      let temp = [] 
 
-        setPhotos(temp);
-      });
-  }); 
+      for(let album in data) { 
+        let link = data[album]
+        temp.push(<PhotoItem key={album} album={album} imgLink={link} />);
+      }
+
+      setIsLoading(false);
+      setPhotos(temp);
+      console.log(photos);
+    };
+
+    fetchData();
+  }, []); 
 
   return (
     <div className="photo-index">
