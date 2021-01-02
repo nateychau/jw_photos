@@ -40,13 +40,13 @@ def get_covers():
     # }
     # query = cv.build_query(filter=filter_params).execute()
 
-
     for row in database:
         if row.album_cover:
           res[row.album[0]] = row.image[0]
 
     return res
 
+#get photos by album name
 @app.route('/api/album/<album_name>')
 @cross_origin()
 def get_album(album_name):
@@ -60,4 +60,20 @@ def get_album(album_name):
               "album": row.album[0]
             }
 
+    return res
+
+#get photos by filter
+@app.route('/api/filter/<filter_name>')
+@cross_origin()
+def get_filtered(filter_name):
+    res = {}
+
+    for row in database:
+        if filter_name.capitalize() in row.filter:
+            res[row.id] = {
+              "description": row.description,
+              "image": row.image[0],
+              "album": row.album[0]
+            }
+    
     return res
