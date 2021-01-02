@@ -28,10 +28,15 @@
   width: 40%;
   color: #4a4b50;
   opacity: 0.7;
+  line-height: 20px;
 }
 
 .album-body ul:first-of-type{
   display: flex; 
   color: #a1a3ad;
   opacity: 0.5;
+}
+
+.album-body ul:first-of-type li{
+  padding: 0 15px 0;
 }
