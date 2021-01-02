@@ -1,14 +1,17 @@
 .main-body{
-  padding: 81px 58px 0;
+  padding: 10px 58px 0;
 }
 
 .filter-list{
+  padding-top: 20px;
   display: flex; 
   text-transform: uppercase;
 }
 
 .filter-list li{
-  margin-right: 10px;
+  margin-right: 15px;
   color: #969696;
   font-size: 11px;
+  letter-spacing: 5px;
+  cursor: pointer;
 }

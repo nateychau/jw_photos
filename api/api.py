@@ -3,21 +3,37 @@ from flask_cors import CORS, cross_origin
 import config 
 from notion.client import NotionClient
 
+#for cache refreshing
+import time 
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 client = NotionClient(token_v2=f"{config.NOTION_TOKEN}")
 cv = client.get_collection_view("https://www.notion.so/49b17ee8c59b4318910f3c6c7606439f?v=dec5f5ab153a4ee09b4156badd8e44d2")
-database = cv.collection.get_rows() 
+
+cache = cv.collection.get_rows() 
+flush_date = time.time() + 604800 #1 week from now 
+
+#if its been a week since we last made a request directly to notion, 
+#update the cache, and update the next flush date
+def check_for_flush():
+    global flush_date
+    ttl = flush_date - time.time() 
+    if ttl < 0:
+        cache = cv.collection.get_rows()
+        flush_date = time.time() + 604800
+
 
 #get all photos
 @app.route('/api/')
 @cross_origin()
 def get_all():
+    check_for_flush()
     res = {}
   
-    for row in database:
+    for row in cache:
         res[row.description] = {
           "album":row.album,
           "filters":row.filter,
@@ -31,7 +47,7 @@ def get_all():
 @app.route('/api/covers')
 @cross_origin()
 def get_covers():
-    # cv = client.get_collection_view("https://www.notion.so/49b17ee8c59b4318910f3c6c7606439f?v=9939fa03f5144dcd8a96d525e22216ed")
+    check_for_flush()
     res = {}
     # filter_params = {
     #     "property": "album cover",
@@ -40,7 +56,7 @@ def get_covers():
     # }
     # query = cv.build_query(filter=filter_params).execute()
 
-    for row in database:
+    for row in cache:
         if row.album_cover:
           res[row.album[0]] = row.image[0]
 
@@ -50,9 +66,10 @@ def get_covers():
 @app.route('/api/album/<album_name>')
 @cross_origin()
 def get_album(album_name):
+    check_for_flush()
     res = {}
 
-    for row in database:
+    for row in cache:
         if row.album[0] == album_name:
             res[row.id] = {
               "description": row.description,
@@ -63,12 +80,13 @@ def get_album(album_name):
     return res
 
 #get photos by filter
-@app.route('/api/filter/<filter_name>')
+@app.route('/api/filters/<filter_name>')
 @cross_origin()
 def get_filtered(filter_name):
+    check_for_flush()
     res = {}
 
-    for row in database:
+    for row in cache:
         if filter_name.capitalize() in row.filter:
             res[row.id] = {
               "description": row.description,
@@ -77,3 +95,32 @@ def get_filtered(filter_name):
             }
     
     return res
+
+#get list of filters
+#not completely sure if this is the best way to get filters...
+#might make more sense to dynamically generate filter list in front end based on photos received
+#Response structure:
+# {
+#   id: ...,
+#   name: "Filter",
+#   options: [
+#     {
+#       color: ...
+#       id: ...,
+#       value: <filter_name>
+#     }, 
+#     {
+#       color: ...
+#       id: ...,
+#       value: <filter_name2>
+#     }
+#   ],
+#   slug: "filter",
+#   type: "multi_select"
+# }
+@app.route('/api/filters')
+@cross_origin()
+def get_filters():
+    check_for_flush()
+    options = cv.collection.get_schema_property("filter")
+    return options

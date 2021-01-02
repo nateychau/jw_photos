@@ -45353,6 +45353,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _photos_photo_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./photos/photo_index */ "./src/components/photos/photo_index.jsx");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -45373,6 +45377,55 @@ var Body = function Body() {
       filter = _useState2[0],
       setFilter = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      filterList = _useState4[0],
+      setList = _useState4[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var res, data, temp;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return fetch("http://localhost:5000/api/filters");
+
+              case 2:
+                res = _context.sent;
+                _context.next = 5;
+                return res.json();
+
+              case 5:
+                data = _context.sent;
+                temp = data["options"].map(function (item, i) {
+                  var filterItem = item["value"];
+                  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+                    key: i,
+                    onClick: function onClick() {
+                      return setFilter(filterItem);
+                    }
+                  }, filterItem);
+                });
+                setList(temp);
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
   return (
     /*#__PURE__*/
     // Should probably generate this list dynamically
@@ -45380,15 +45433,7 @@ var Body = function Body() {
       className: "main-body"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "filter-list"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      onClick: function onClick() {
-        return setFilter(1);
-      }
-    }, "Category 1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-      onClick: function onClick() {
-        return setFilter(2);
-      }
-    }, "Category 2")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photos_photo_index__WEBPACK_IMPORTED_MODULE_1__["PhotoIndex"], {
+    }, filterList), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photos_photo_index__WEBPACK_IMPORTED_MODULE_1__["PhotoIndex"], {
       filter: filter
     }))
   );
@@ -45464,39 +45509,41 @@ var PhotoIndex = function PhotoIndex(_ref) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var fetchData = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var res, data, temp, album, link;
+        var res, data, temp, i, album, link;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                setIsLoading(true);
-                console.log('fetching');
-                _context.next = 4;
-                return fetch('http://localhost:5000/api/covers');
+                setIsLoading(true); //will be used for a loading wheel when fetching
 
-              case 4:
+                _context.next = 3;
+                return fetch("http://localhost:5000/api/covers");
+
+              case 3:
                 res = _context.sent;
-                _context.next = 7;
+                _context.next = 6;
                 return res.json();
 
-              case 7:
+              case 6:
                 data = _context.sent;
                 temp = [];
+                i = 0; //counter to alternate the styling of each photo item
 
                 for (album in data) {
                   link = data[album];
                   temp.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photo_item__WEBPACK_IMPORTED_MODULE_1__["PhotoItem"], {
-                    key: album,
+                    key: i,
+                    rowType: i % 2 === 0 ? "cornered-row" : "centered-row",
                     album: album,
                     imgLink: link
                   }));
+                  i++;
                 }
 
                 setIsLoading(false);
                 setPhotos(temp);
-                console.log(photos);
 
-              case 13:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -45514,9 +45561,9 @@ var PhotoIndex = function PhotoIndex(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "photo-index"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "index-col"
+    className: "index-col col-left"
   }, photos.slice(0, photos.length / 2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "index-col"
+    className: "index-col col-right"
   }, photos.slice(photos.length / 2, photos.length)));
 };
 
@@ -45534,12 +45581,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhotoItem", function() { return PhotoItem; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/util */ "./src/util/util.js");
+
 
 var PhotoItem = function PhotoItem(_ref) {
   var album = _ref.album,
-      imgLink = _ref.imgLink;
+      imgLink = _ref.imgLink,
+      rowType = _ref.rowType;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "index-row"
+    className: "index-row ".concat(rowType)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "img-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -45595,6 +45645,22 @@ document.addEventListener("DOMContentLoaded", function () {
   var root = document.getElementById("root");
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_2__["Root"], null), root);
 });
+
+/***/ }),
+
+/***/ "./src/util/util.js":
+/*!**************************!*\
+  !*** ./src/util/util.js ***!
+  \**************************/
+/*! exports provided: getRandomArbitrary */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomArbitrary", function() { return getRandomArbitrary; });
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 /***/ }),
 
