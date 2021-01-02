@@ -142,7 +142,3 @@ def get_filters():
     check_for_flush()
     options = cv.collection.get_schema_property("filter")
     return options
-
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
