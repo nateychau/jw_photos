@@ -2,6 +2,10 @@
   margin-bottom: 10px;
 }
 
+.index-row.album-row{
+  margin-bottom: 60px;
+}
+
 .index-row h2{
   font-size: 17px; 
 }
@@ -33,3 +37,5 @@
   width: 100% ;
   margin-bottom: 10px;
 }
+
+

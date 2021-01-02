@@ -12,8 +12,17 @@ export const Body = () => {
 
       const temp = data["options"].map((item, i) => {
         let filterItem = item["value"];
-        return <li key={i} onClick={() => setFilter(filterItem)}>{filterItem}</li>
-      }) 
+        return (
+          <li
+            key={i}
+            onClick={() => {
+              setFilter(filterItem.toLowerCase());
+            }}
+          >
+            {filterItem}
+          </li>
+        );
+      });
 
       setList(temp);
     };
@@ -25,9 +34,17 @@ export const Body = () => {
     // Should probably generate this list dynamically
     <div className="main-body">
       <ul className="filter-list">
+        <li
+          key={-1}
+          onClick={() => {
+            setFilter(null);
+          }}
+        >
+          all
+        </li>
         {filterList}
       </ul>
-      <PhotoIndex filter={filter} /> 
+      <PhotoIndex filter={filter} />
     </div>
   );
 };

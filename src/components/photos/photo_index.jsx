@@ -9,13 +9,16 @@ export const PhotoIndex = ({ filter }) => {
     const fetchData = async () => {
       setIsLoading(true); //will be used for a loading wheel when fetching
 
-      const res = await fetch("http://localhost:5000/api/covers");
+      const url = "http://localhost:5000/api/covers"; //add route for filtering cover photos to avoid filtering below
+      const res = await fetch(url);
       const data = await res.json();
 
       let temp = [];
       let i = 0; //counter to alternate the styling of each photo item
       for (let album in data) {
-        let link = data[album];
+        if (filter && !data[album]["filters"].includes(filter)) continue; //may want to consider handling filtering elsewhere, or some other way. this does not scale
+
+        let link = data[album]["image"];
         temp.push(
           <PhotoItem
             key={i}
@@ -29,10 +32,11 @@ export const PhotoIndex = ({ filter }) => {
 
       setIsLoading(false);
       setPhotos(temp);
+
     };
 
     fetchData();
-  }, []);
+  }, [filter]);
 
   return (
     <div className="photo-index">

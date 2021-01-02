@@ -17,14 +17,19 @@ cache = cv.collection.get_rows()
 flush_date = time.time() + 604800 #1 week from now 
 
 #if its been a week since we last made a request directly to notion, 
-#update the cache, and update the next flush date
+#update the cache, and reset the flush date to 1 week from now
 def check_for_flush():
     global flush_date
+    print('current flush date', time.localtime(flush_date))
     ttl = flush_date - time.time() 
     if ttl < 0:
+        print('flushing cache')
+        global cache
         cache = cv.collection.get_rows()
         flush_date = time.time() + 604800
-
+    else:
+        print('did not flush')
+    print('next flush date', time.localtime(flush_date))
 
 #get all photos
 @app.route('/api/')
@@ -58,7 +63,10 @@ def get_covers():
 
     for row in cache:
         if row.album_cover:
-          res[row.album[0]] = row.image[0]
+          res[row.album[0]] = {
+            "image": row.image[0],
+            "filters": [filter.lower() for filter in row.filter]
+          }
 
     return res
 
@@ -72,9 +80,11 @@ def get_album(album_name):
     for row in cache:
         if row.album[0] == album_name:
             res[row.id] = {
+              "text": row.text,
               "description": row.description,
               "image": row.image[0],
-              "album": row.album[0]
+              "album": row.album[0],
+              "filters": row.filter
             }
 
     return res

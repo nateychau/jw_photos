@@ -45405,7 +45405,7 @@ var Body = function Body() {
                   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
                     key: i,
                     onClick: function onClick() {
-                      return setFilter(filterItem);
+                      setFilter(filterItem.toLowerCase());
                     }
                   }, filterItem);
                 });
@@ -45433,7 +45433,12 @@ var Body = function Body() {
       className: "main-body"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
       className: "filter-list"
-    }, filterList), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photos_photo_index__WEBPACK_IMPORTED_MODULE_1__["PhotoIndex"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: -1,
+      onClick: function onClick() {
+        setFilter(null);
+      }
+    }, "all"), filterList), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photos_photo_index__WEBPACK_IMPORTED_MODULE_1__["PhotoIndex"], {
       filter: filter
     }))
   );
@@ -45453,11 +45458,141 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Header", function() { return Header; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 var Header = function Header() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Joann W Photos"));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Joann W Photos")));
+};
+
+/***/ }),
+
+/***/ "./src/components/photos/album_detail.jsx":
+/*!************************************************!*\
+  !*** ./src/components/photos/album_detail.jsx ***!
+  \************************************************/
+/*! exports provided: AlbumPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlbumPage", function() { return AlbumPage; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _photo_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./photo_item */ "./src/components/photos/photo_item.jsx");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var AlbumPage = function AlbumPage(props) {
+  var title = props.match.params.album;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      photos = _useState2[0],
+      setPhotos = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState6 = _slicedToArray(_useState5, 2),
+      text = _useState6[0],
+      setText = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      filters = _useState8[0],
+      setFilters = _useState8[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var url, res, data, tempFilters, text, temp, i, album, link, description;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                url = "http://localhost:5000/api/album/".concat(encodeURIComponent(title));
+                _context.next = 3;
+                return fetch(url);
+
+              case 3:
+                res = _context.sent;
+                _context.next = 6;
+                return res.json();
+
+              case 6:
+                data = _context.sent;
+                text = "";
+                temp = [];
+                i = 0; //counter to alternate the styling of each photo item
+
+                for (album in data) {
+                  if (!filters.length) {
+                    tempFilters = data[album]["filters"].map(function (item, i) {
+                      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+                        key: i
+                      }, item);
+                    });
+                  }
+
+                  if (data[album]["text"].length) text = data[album]["text"];
+                  link = data[album]["image"];
+                  description = data[album]["description"];
+                  temp.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photo_item__WEBPACK_IMPORTED_MODULE_1__["PhotoItem"], {
+                    key: link,
+                    rowType: "album-row",
+                    album: description,
+                    imgLink: link
+                  }));
+                }
+
+                setIsLoading(false);
+                setPhotos(temp);
+                setText(text);
+                setFilters(tempFilters);
+
+              case 15:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "album-body"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, filters), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, text), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "index-col"
+  }, photos));
 };
 
 /***/ }),
@@ -45509,41 +45644,63 @@ var PhotoIndex = function PhotoIndex(_ref) {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var fetchData = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var res, data, temp, i, album, link;
+        var url, res, data, temp, i, album, link;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 setIsLoading(true); //will be used for a loading wheel when fetching
 
-                _context.next = 3;
-                return fetch("http://localhost:5000/api/covers");
+                url = "http://localhost:5000/api/covers"; //add route for filtering cover photos to avoid filtering below
 
-              case 3:
+                _context.next = 4;
+                return fetch(url);
+
+              case 4:
                 res = _context.sent;
-                _context.next = 6;
+                _context.next = 7;
                 return res.json();
 
-              case 6:
+              case 7:
                 data = _context.sent;
                 temp = [];
                 i = 0; //counter to alternate the styling of each photo item
 
-                for (album in data) {
-                  link = data[album];
-                  temp.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photo_item__WEBPACK_IMPORTED_MODULE_1__["PhotoItem"], {
-                    key: i,
-                    rowType: i % 2 === 0 ? "cornered-row" : "centered-row",
-                    album: album,
-                    imgLink: link
-                  }));
-                  i++;
+                _context.t0 = regeneratorRuntime.keys(data);
+
+              case 11:
+                if ((_context.t1 = _context.t0()).done) {
+                  _context.next = 20;
+                  break;
                 }
 
+                album = _context.t1.value;
+
+                if (!(filter && !data[album]["filters"].includes(filter))) {
+                  _context.next = 15;
+                  break;
+                }
+
+                return _context.abrupt("continue", 11);
+
+              case 15:
+                //may want to consider handling filtering elsewhere, or some other way. this does not scale
+                link = data[album]["image"];
+                temp.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_photo_item__WEBPACK_IMPORTED_MODULE_1__["PhotoItem"], {
+                  key: i,
+                  rowType: i % 2 === 0 ? "cornered-row" : "centered-row",
+                  album: album,
+                  imgLink: link
+                }));
+                i++;
+                _context.next = 11;
+                break;
+
+              case 20:
                 setIsLoading(false);
                 setPhotos(temp);
 
-              case 12:
+              case 22:
               case "end":
                 return _context.stop();
             }
@@ -45557,7 +45714,7 @@ var PhotoIndex = function PhotoIndex(_ref) {
     }();
 
     fetchData();
-  }, []);
+  }, [filter]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "photo-index"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -45581,20 +45738,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhotoItem", function() { return PhotoItem; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/util */ "./src/util/util.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/util */ "./src/util/util.js");
+
 
 
 var PhotoItem = function PhotoItem(_ref) {
   var album = _ref.album,
       imgLink = _ref.imgLink,
       rowType = _ref.rowType;
+  var image = rowType !== "album-row" ?
+  /*#__PURE__*/
+  //if rowType is not null, then this component is on the index page and should be wrapped in a link
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/".concat(album)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: imgLink
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: imgLink
+  });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "index-row ".concat(rowType)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "img-container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: imgLink
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, album));
+  }, image), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, album));
 };
 
 /***/ }),
@@ -45614,12 +45781,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header */ "./src/components/header.jsx");
 /* harmony import */ var _body__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./body */ "./src/components/body.jsx");
+/* harmony import */ var _photos_album_detail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./photos/album_detail */ "./src/components/photos/album_detail.jsx");
+
 
 
 
 
 var Root = function Root() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header__WEBPACK_IMPORTED_MODULE_2__["Header"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_body__WEBPACK_IMPORTED_MODULE_3__["Body"], null));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_header__WEBPACK_IMPORTED_MODULE_2__["Header"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/:album",
+    component: _photos_album_detail__WEBPACK_IMPORTED_MODULE_4__["AlbumPage"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/",
+    component: _body__WEBPACK_IMPORTED_MODULE_3__["Body"]
+  })));
 };
 
 /***/ }),
