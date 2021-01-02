@@ -1,10 +1,10 @@
 const path = require("path");
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/index.jsx"],
+  entry: ["babel-polyfill", "./frontend/src/index.jsx"],
   output: {
     path: path.resolve(__dirname),
-    filename: "./bundle.js",
+    filename: "./frontend/bundle.js",
   },
   devtool: "source-map",
   module: {

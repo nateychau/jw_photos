@@ -6,7 +6,7 @@ from notion.client import NotionClient
 #for cache refreshing
 import time 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./frontend", static_url_path="/")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -31,13 +31,16 @@ def check_for_flush():
         print('did not flush')
     print('next flush date', time.localtime(flush_date))
 
-# @app.route('/')
-# def index():
-#     return app.send_static_file('index.html')
 
-# @app.errorhandler(404)
-# def not_found(e):
-#     return app.send_static_file('index.html')
+#index route
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+#handle react rerouting 
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
 
 #get all photos
 @app.route('/api/')
@@ -142,3 +145,7 @@ def get_filters():
     check_for_flush()
     options = cv.collection.get_schema_property("filter")
     return options
+
+
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0')
