@@ -21,7 +21,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --mode=development --watch",
-    "start-api": "cd api && venv/bin/flask run --no-debugger"
+    "start-api": "cd api && venv/bin/flask run --no-debugger",
+    "postinstall": "webpack"
+  },
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.14.6"
   },
   "repository": {
     "type": "git",

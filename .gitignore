@@ -1,6 +1,6 @@
 node_modules/
 package-lock.json
-/.bundle
+bundle.js*
 venv
 __pycache__
 .flaskenv

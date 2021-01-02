@@ -31,6 +31,14 @@ def check_for_flush():
         print('did not flush')
     print('next flush date', time.localtime(flush_date))
 
+# @app.route('/')
+# def index():
+#     return app.send_static_file('index.html')
+
+# @app.errorhandler(404)
+# def not_found(e):
+#     return app.send_static_file('index.html')
+
 #get all photos
 @app.route('/api/')
 @cross_origin()
@@ -134,3 +142,7 @@ def get_filters():
     check_for_flush()
     options = cv.collection.get_schema_property("filter")
     return options
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
