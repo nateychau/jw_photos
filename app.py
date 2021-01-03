@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS, cross_origin
 import config
 from notion.client import NotionClient
+from python_util.about import About
 
 # for cache refreshing
 import time
@@ -14,22 +15,12 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 client = NotionClient(token_v2=f"{config.NOTION_TOKEN}")
                       #enable_caching=True, monitor=True, start_monitoring=True)
 
-about = client.get_block(f"https://www.notion.so/{config.ABOUT_KEY}")
-#-------REARRANGE FILE STRUCTURE
+about_block = client.get_block(f"https://www.notion.so/{config.ABOUT_KEY}")
+
 @app.route('/api/about')
 @cross_origin()
 def get_about():
-    res = {
-      "image": "",
-      "text": []
-    }
-    children = about.children
-    for child in children:
-        if child.type == "image":
-            res["image"] = child.source
-        elif child.type == "text" and len(child.title):
-            res["text"].append(child.title)
-    return res
+    return About(about_block).to_dict() #set up server side caching for this
 
 
 cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")

@@ -17,7 +17,7 @@ export const About = () => {
       let fragments = data["text"].map((text, i) => {
         return <p key={i}>{text}</p>;
       });
-      console.log(data["image"]);
+      
       setPage({
         image: data["image"],
         text: fragments,
