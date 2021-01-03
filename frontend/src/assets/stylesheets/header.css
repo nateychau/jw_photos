@@ -1,9 +1,14 @@
 .header {
-  padding-top: 28px;
+  /* padding-top: 28px; */
+  padding: 28px 58px 0;
 }
 
 .header h2 {
-  padding: 0 58px;
   font-size: 20px;
   display: inline; 
+  transition: opacity .5s ease-out; 
+}
+
+.header h2:hover{
+  opacity: 0.6;
 }

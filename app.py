@@ -11,29 +11,30 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # this can probably replace the timed cache implemented below
-client = NotionClient(token_v2=f"{config.NOTION_TOKEN}",
-                      enable_caching=True, monitor=True, start_monitoring=True)
+client = NotionClient(token_v2=f"{config.NOTION_TOKEN}")
+                      #enable_caching=True, monitor=True, start_monitoring=True)
 cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")
 
 cache = cv.collection.get_rows()
 flush_date = time.time() + 604800  # 1 week from now
 
+#collection is cached on the server on start up, and refreshed once a week
 # if its been a week since we last made a request directly to notion,
 # update the cache, and reset the flush date to 1 week from now
-
-
 def check_for_flush():
     global flush_date
-    print('current flush date', time.localtime(flush_date))
+    # print('current flush date', time.localtime(flush_date))
     ttl = flush_date - time.time()
     if ttl < 0:
-        print('flushing cache')
+        # print('flushing cache')
+        global cv
+        cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}") #update table and save to cache
         global cache
         cache = cv.collection.get_rows()
         flush_date = time.time() + 604800
     else:
         print('did not flush')
-    print('next flush date', time.localtime(flush_date))
+    # print('next flush date', time.localtime(flush_date))
 
 
 # index route
@@ -51,23 +52,20 @@ def not_found(e):
 # get all photos
 
 
-@app.route('/api/')
+@app.route('/api')
 @cross_origin()
 def get_all():
-    # check_for_flush()
+    check_for_flush()
     res = {}
-    rows = cv.collection.get_rows()
-    if not rows:
-        return {"test": "no results"}
 
-    for row in rows:
+    for row in cache:
         res[row.description] = {
             "album": row.album,
             "filters": row.filter,
             "image": row.image,
             "album cover": row.album_cover
         }
-
+    
     return res
 
 # get all photos tagged as album covers
@@ -77,7 +75,8 @@ def get_all():
 @app.route('/api/covers/<filter>')  # filter is optional
 @cross_origin()
 def get_covers(filter=False):
-    # check_for_flush()
+    # start = time.process_time()
+    check_for_flush()
     res = {}
     # filter_params = {
     #     "property": "album cover",
@@ -85,21 +84,20 @@ def get_covers(filter=False):
     #     "value": True
     # }
     # query = cv.build_query(filter=filter_params).execute()
-    rows = cv.collection.get_rows()
-    for row in rows:
+    for row in cache:
         if row.album_cover and (not filter or filter.capitalize() in row.filter):
             res[row.album[0]] = row.image[0]
-
+    # print(f"time to fetch: {time.process_time() - start}")
     return res
 
 # get photos by album name
 @app.route('/api/album/<album_name>')
 @cross_origin()
 def get_album(album_name):
-    # check_for_flush()
+    check_for_flush()
     res = {}
-    rows = cv.collection.get_rows()
-    for row in rows:
+    
+    for row in cache:
         if row.album[0] == album_name:
             res[row.id] = {
                 "text": row.text,
@@ -117,11 +115,10 @@ def get_album(album_name):
 @app.route('/api/filters/<filter_name>')
 @cross_origin()
 def get_filtered(filter_name):
-    # check_for_flush()
+    check_for_flush()
     res = {}
 
-    rows = cv.collection.get_rows()
-    for row in rows:
+    for row in cache:
         if filter_name.capitalize() in row.filter:
             res[row.id] = {
                 "description": row.description,

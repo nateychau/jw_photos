@@ -15,4 +15,9 @@
   font-size: 11px;
   letter-spacing: 5px;
   cursor: pointer;
+  transition: opacity .4s ease-out;
+}
+
+.filter-list li:hover{
+  opacity: 0.6;
 }
