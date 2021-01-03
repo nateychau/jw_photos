@@ -13,10 +13,28 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # this can probably replace the timed cache implemented below
 client = NotionClient(token_v2=f"{config.NOTION_TOKEN}")
                       #enable_caching=True, monitor=True, start_monitoring=True)
-cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")
 
+about = client.get_block(f"https://www.notion.so/{config.ABOUT_KEY}")
+#-------REARRANGE FILE STRUCTURE
+@app.route('/api/about')
+@cross_origin()
+def get_about():
+    res = {
+      "image": "",
+      "text": []
+    }
+    children = about.children
+    for child in children:
+        if child.type == "image":
+            res["image"] = child.source
+        elif child.type == "text" and len(child.title):
+            res["text"].append(child.title)
+    return res
+
+
+cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")
 cache = cv.collection.get_rows()
-flush_date = time.time() + 604800  # 1 week from now
+flush_date = time.time() + 5#604800  # 1 week from now
 
 #collection is cached on the server on start up, and refreshed once a week
 # if its been a week since we last made a request directly to notion,
@@ -28,10 +46,10 @@ def check_for_flush():
     if ttl < 0:
         # print('flushing cache')
         global cv
-        cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}") #update table and save to cache
+        cv.refresh() #refresh the collection and save to cache
         global cache
         cache = cv.collection.get_rows()
-        flush_date = time.time() + 604800
+        flush_date = time.time() + 5#604800
     else:
         print('did not flush')
     # print('next flush date', time.localtime(flush_date))
@@ -50,8 +68,6 @@ def not_found(e):
     return app.send_static_file('index.html')
 
 # get all photos
-
-
 @app.route('/api')
 @cross_origin()
 def get_all():

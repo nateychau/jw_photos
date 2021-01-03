@@ -1,0 +1,39 @@
+#about-page{
+  min-height: 80vh;
+  display: flex; 
+  justify-content: center; 
+}
+
+.about-row{
+  padding: 50px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly; 
+  transition: opacity 2s ease-in-out;
+}
+
+.about-row .img-container{
+  width: 80%;
+}
+
+.col{
+  width: 50%;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column; 
+}
+.col:first-child{
+  align-items: flex-end;
+}
+
+.about-row h2{
+  font-size: 24px; 
+  font-weight: 500;
+  color: #353535
+}
+
+.about-row p{
+  padding: 20px 0;
+  line-height: 24px;
+  color: #474747
+}

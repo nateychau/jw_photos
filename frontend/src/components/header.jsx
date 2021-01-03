@@ -7,6 +7,9 @@ export const Header = () => {
       <Link to="/">
         <h2>Joann W Photos</h2>
       </Link>
+      <Link to="/about">
+        <h4>About</h4>
+      </Link>
     </div>
   );
 };

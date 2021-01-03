@@ -1,14 +1,27 @@
 .header {
-  /* padding-top: 28px; */
-  padding: 28px 58px 0;
+  padding-top: 28px;
+  /* padding: 28px 58px 0; */
+  display: flex; 
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.header h2 {
+.header a {
+  padding: 0 58px;
+}
+
+.header h2, .header h4{
   font-size: 20px;
   display: inline; 
   transition: opacity .5s ease-out; 
 }
 
-.header h2:hover{
+.header h2:hover, .header h4:hover{
   opacity: 0.6;
+}
+
+.header h4{
+  font-size: 16px;
+  color: #646464
 }
