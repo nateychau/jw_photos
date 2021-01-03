@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { PhotoItem } from "./photo_item";
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/core";
+import OnImagesLoaded from "react-on-images-loaded";
 
 export const AlbumPage = (props) => {
   const title = props.match.params.album;
@@ -10,6 +13,8 @@ export const AlbumPage = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+
       const url = `/api/album/${encodeURIComponent(title)}`;
       const res = await fetch(url);
       const data = await res.json();
@@ -38,7 +43,6 @@ export const AlbumPage = (props) => {
         );
       }
 
-      setIsLoading(false);
       setPhotos(temp);
       setText(text);
       setFilters(tempFilters);
@@ -48,11 +52,31 @@ export const AlbumPage = (props) => {
   }, []);
 
   return (
-    <div className="album-body">
-      <h1>{title}</h1>
-      <ul>{filters}</ul>
-      <p>{text}</p>
-      <ul className="index-col">{photos}</ul>
-    </div>
+    <>
+      <ClipLoader
+        color={"#444444"}
+        loading={isLoading}
+        css={css`
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transition: all 1s
+        `}
+      />
+      {photos.length ? (
+        <OnImagesLoaded
+          onLoaded={() => setIsLoading(false)}
+          onTimeout={() => setIsLoading(false)}
+          timeout={7000}
+        >
+          <div className="album-body" style={{ opacity: isLoading ? 0 : 1 }}>
+            <h1>{title}</h1>
+            <ul>{filters}</ul>
+            <p>{text}</p>
+            <ul className="index-col">{photos}</ul>
+          </div>
+        </OnImagesLoaded>
+      ) : null}
+    </>
   );
 };

@@ -4,9 +4,12 @@ import { PhotoIndex } from "./photos/photo_index";
 export const Body = () => {
   const [filter, setFilter] = useState(null);
   const [filterList, setList] = useState(null);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+
       const res = await fetch("/api/filters");
       const data = await res.json();
 
@@ -25,6 +28,7 @@ export const Body = () => {
       });
 
       setList(temp);
+      setLoading(false);
     };
 
     fetchData();
@@ -39,6 +43,7 @@ export const Body = () => {
           onClick={() => {
             setFilter(null);
           }}
+          style={{ opacity: isLoading ? 0 : 1 }}
         >
           all
         </li>

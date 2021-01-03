@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { PhotoItem } from "./photo_item";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
@@ -11,17 +11,17 @@ export const PhotoIndex = ({ filter }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true); //will be used for a loading wheel when fetching
-
-      const url = "/api/covers"; //add route for filtering cover photos to avoid filtering below
+      setPhotos([]);
+      const url = `/api/covers${filter ? "/"+encodeURIComponent(filter) : ""}`; //apply filter to request if a filter was selected
       const res = await fetch(url);
       const data = await res.json();
 
       let temp = [];
       let i = 0; //counter to alternate the styling of each photo item
       for (let album in data) {
-        if (filter && !data[album]["filters"].includes(filter)) continue; //may want to consider handling filtering elsewhere, or some other way. this does not scale
+        // if (filter && !data[album]["filters"].includes(filter)) continue; //may want to consider handling filtering elsewhere, or some other way. this does not scale
 
-        let link = data[album]["image"];
+        let link = data[album];
         temp.push(
           <PhotoItem
             key={i}

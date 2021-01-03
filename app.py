@@ -41,15 +41,11 @@ def index():
     return app.send_static_file('index.html')
 
 # handle react rerouting
-
-
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
 
 # get all photos
-
-
 @app.route('/api/')
 @cross_origin()
 def get_all():
@@ -70,11 +66,10 @@ def get_all():
     return res
 
 # get all photos tagged as album covers
-
-
 @app.route('/api/covers')
+@app.route('/api/covers/<filter>') #filter is optional
 @cross_origin()
-def get_covers():
+def get_covers(filter=False):
     check_for_flush()
     res = {}
     # filter_params = {
@@ -85,11 +80,8 @@ def get_covers():
     # query = cv.build_query(filter=filter_params).execute()
 
     for row in cache:
-        if row.album_cover:
-            res[row.album[0]] = {
-                "image": row.image[0],
-                "filters": [filter.lower() for filter in row.filter]
-            }
+        if row.album_cover and (not filter or filter.capitalize() in row.filter):
+            res[row.album[0]] = row.image[0]
 
     return res
 
@@ -156,7 +148,7 @@ def get_filtered(filter_name):
 #   type: "multi_select"
 # }
 
-
+#get all filter names (for header)
 @app.route('/api/filters')
 @cross_origin()
 def get_filters():

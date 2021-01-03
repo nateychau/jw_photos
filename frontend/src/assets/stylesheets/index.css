@@ -24,6 +24,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  transition: opacity 3s; 
 }
 
 .album-body h1{
