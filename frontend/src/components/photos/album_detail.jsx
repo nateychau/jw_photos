@@ -10,13 +10,11 @@ export const AlbumPage = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `http://localhost:5000/api/album/${encodeURIComponent(
-        title
-      )}`;
+      const url = `/api/album/${encodeURIComponent(title)}`;
       const res = await fetch(url);
       const data = await res.json();
 
-      let tempFilters; 
+      let tempFilters;
       let text = "";
       const temp = [];
       let i = 0; //counter to alternate the styling of each photo item

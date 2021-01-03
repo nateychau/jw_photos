@@ -7,7 +7,7 @@ export const Body = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/filters");
+      const res = await fetch("/api/filters");
       const data = await res.json();
 
       const temp = data["options"].map((item, i) => {

@@ -9,7 +9,7 @@ export const PhotoIndex = ({ filter }) => {
     const fetchData = async () => {
       setIsLoading(true); //will be used for a loading wheel when fetching
 
-      const url = "http://localhost:5000/api/covers"; //add route for filtering cover photos to avoid filtering below
+      const url = "/api/covers"; //add route for filtering cover photos to avoid filtering below
       const res = await fetch(url);
       const data = await res.json();
 
