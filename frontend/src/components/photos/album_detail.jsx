@@ -28,12 +28,11 @@ export const AlbumPage = (props) => {
         if (data[album]["text"].length) text = data[album]["text"];
 
         let link = data[album]["image"];
-        let description = data[album]["description"];
         temp.push(
           <PhotoItem
             key={link}
             rowType={"album-row"}
-            album={description}
+            album={null}
             imgLink={link}
           />
         );

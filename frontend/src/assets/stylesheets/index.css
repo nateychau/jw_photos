@@ -2,6 +2,13 @@
   padding-top: 60px;
   width: 100%;
   display: flex;
+  transition: opacity 3s; 
+}
+
+.photo-index h2, .album-body h1{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-style: italic;
 }
 
 .index-col{
@@ -9,6 +16,7 @@
   display: flex;
   flex-direction: column; 
 }
+
 
 /* album details page */
 .album-body{

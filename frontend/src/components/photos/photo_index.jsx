@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { PhotoItem } from "./photo_item";
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/core";
+import OnImagesLoaded from "react-on-images-loaded";
 
 export const PhotoIndex = ({ filter }) => {
   const [photos, setPhotos] = useState([]);
@@ -30,22 +33,38 @@ export const PhotoIndex = ({ filter }) => {
         i++;
       }
 
-      setIsLoading(false);
       setPhotos(temp);
-
     };
 
     fetchData();
   }, [filter]);
 
   return (
-    <div className="photo-index">
-      <ul className="index-col col-left">
-        {photos.slice(0, photos.length / 2)}
-      </ul>
-      <ul className="index-col col-right">
-        {photos.slice(photos.length / 2, photos.length)}
-      </ul>
-    </div>
+    <>
+      <ClipLoader
+        color={"#444444"}
+        loading={isLoading}
+        css={css`
+          position: absolute;
+          top: 50%;
+          left: 50%;
+        `}
+      />
+      {photos.length ? 
+      <OnImagesLoaded
+        onLoaded={() => setIsLoading(false)}
+        onTimeout={() => setIsLoading(false)}
+        timeout={7000}
+      >
+        <div className="photo-index" style={{ opacity: isLoading ? 0 : 1 }}>
+          <ul className="index-col col-left">
+            {photos.slice(0, photos.length / 2)}
+          </ul>
+          <ul className="index-col col-right">
+            {photos.slice(photos.length / 2, photos.length)}
+          </ul>
+        </div>
+      </OnImagesLoaded> : null}
+    </>
   );
 };

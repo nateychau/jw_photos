@@ -1,47 +1,45 @@
-.index-row{
+.index-row {
   margin-bottom: 10px;
 }
 
-.index-row.album-row{
+
+.index-row.album-row {
   margin-bottom: 60px;
 }
 
-.index-row h2{
-  font-size: 17px; 
+.index-row h2 {
+  font-size: 17px;
 }
 
-.album-row h2{
+.album-row h2 {
   opacity: 0.5;
   padding: 15px 0 10px;
   font-size: 14px;
 }
 
-.col-left .cornered-row{
+.col-left .cornered-row {
   padding-right: 50px;
   padding-bottom: 60px;
 }
 
-.col-left .centered-row{
+.col-left .centered-row {
   padding-left: 35px;
   padding-right: 40px;
   padding-bottom: 50px;
 }
 
-.col-right .cornered-row{
+.col-right .cornered-row {
   padding-left: 50px;
   padding-bottom: 60px;
 }
 
-.col-right .centered-row{
+.col-right .centered-row {
   padding-left: 40px;
   padding-right: 35px;
   padding-bottom: 50px;
 }
 
-
-.index-row .img-container{
-  width: 100% ;
+.index-row .img-container {
+  width: 100%;
   margin-bottom: 10px;
 }
-
-
