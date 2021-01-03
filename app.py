@@ -7,7 +7,7 @@ from python_util.about import About
 # for cache refreshing
 import time
 
-app = Flask(__name__, static_folder="./frontend", static_url_path="/")
+app = Flask(__name__, static_folder="/frontend", static_url_path="/")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -45,6 +45,9 @@ def check_for_flush():
         print('did not flush')
     # print('next flush date', time.localtime(flush_date))
 
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
 
 # index route
 @app.route('/')
