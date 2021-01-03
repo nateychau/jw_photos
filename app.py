@@ -11,8 +11,7 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 client = NotionClient(token_v2=f"{config.NOTION_TOKEN}")
-cv = client.get_collection_view(
-    "https://www.notion.so/49b17ee8c59b4318910f3c6c7606439f?v=dec5f5ab153a4ee09b4156badd8e44d2")
+cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")
 
 cache = cv.collection.get_rows()
 flush_date = time.time() + 604800  # 1 week from now
