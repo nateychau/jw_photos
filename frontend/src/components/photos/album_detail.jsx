@@ -52,7 +52,8 @@ export const AlbumPage = (props) => {
   }, []);
 
   return (
-    <>
+    //placeholder to hold page height
+    <div id="album-page"> 
       <ClipLoader
         color={"#444444"}
         loading={isLoading}
@@ -77,6 +78,6 @@ export const AlbumPage = (props) => {
           </div>
         </OnImagesLoaded>
       ) : null}
-    </>
+    </div>
   );
 };

@@ -10,7 +10,9 @@ app = Flask(__name__, static_folder="./frontend", static_url_path="/")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-client = NotionClient(token_v2=f"{config.NOTION_TOKEN}")
+# this can probably replace the timed cache implemented below
+client = NotionClient(token_v2=f"{config.NOTION_TOKEN}",
+                      enable_caching=True, monitor=True, start_monitoring=True)
 cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")
 
 cache = cv.collection.get_rows()
@@ -40,21 +42,25 @@ def index():
     return app.send_static_file('index.html')
 
 # handle react rerouting
+
+
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
 
 # get all photos
+
+
 @app.route('/api/')
 @cross_origin()
 def get_all():
-    check_for_flush()
+    # check_for_flush()
     res = {}
-    cache = cv.collection.get_rows(search="teasdfadfadfasdfst")
-    if not cache:
+    rows = cv.collection.get_rows()
+    if not rows:
         return {"test": "no results"}
 
-    for row in cache:
+    for row in rows:
         res[row.description] = {
             "album": row.album,
             "filters": row.filter,
@@ -65,11 +71,13 @@ def get_all():
     return res
 
 # get all photos tagged as album covers
+
+
 @app.route('/api/covers')
-@app.route('/api/covers/<filter>') #filter is optional
+@app.route('/api/covers/<filter>')  # filter is optional
 @cross_origin()
 def get_covers(filter=False):
-    check_for_flush()
+    # check_for_flush()
     res = {}
     # filter_params = {
     #     "property": "album cover",
@@ -77,23 +85,21 @@ def get_covers(filter=False):
     #     "value": True
     # }
     # query = cv.build_query(filter=filter_params).execute()
-
-    for row in cache:
+    rows = cv.collection.get_rows()
+    for row in rows:
         if row.album_cover and (not filter or filter.capitalize() in row.filter):
             res[row.album[0]] = row.image[0]
 
     return res
 
 # get photos by album name
-
-
 @app.route('/api/album/<album_name>')
 @cross_origin()
 def get_album(album_name):
-    check_for_flush()
+    # check_for_flush()
     res = {}
-
-    for row in cache:
+    rows = cv.collection.get_rows()
+    for row in rows:
         if row.album[0] == album_name:
             res[row.id] = {
                 "text": row.text,
@@ -111,10 +117,11 @@ def get_album(album_name):
 @app.route('/api/filters/<filter_name>')
 @cross_origin()
 def get_filtered(filter_name):
-    check_for_flush()
+    # check_for_flush()
     res = {}
 
-    for row in cache:
+    rows = cv.collection.get_rows()
+    for row in rows:
         if filter_name.capitalize() in row.filter:
             res[row.id] = {
                 "description": row.description,
@@ -147,10 +154,12 @@ def get_filtered(filter_name):
 #   type: "multi_select"
 # }
 
-#get all filter names (for header)
+# get all filter names (for header)
+
+
 @app.route('/api/filters')
 @cross_origin()
 def get_filters():
-    check_for_flush()
+
     options = cv.collection.get_schema_property("filter")
     return options
