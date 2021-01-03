@@ -7,7 +7,7 @@ from python_util.about import About
 # for cache refreshing
 import time
 
-app = Flask(__name__, static_folder="/frontend", static_url_path="/")
+app = Flask(__name__, static_folder="./frontend", static_url_path="/")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
