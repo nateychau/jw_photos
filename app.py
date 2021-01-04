@@ -73,7 +73,8 @@ def get_all():
             "album": row.album,
             "filters": row.filter,
             "image": row.image,
-            "album cover": row.album_cover
+            "album cover": row.album_cover,
+            "orientation": row.orientation
         }
     
     return res
@@ -96,7 +97,10 @@ def get_covers(filter=False):
     # query = cv.build_query(filter=filter_params).execute()
     for row in cache:
         if row.album_cover and (not filter or filter.capitalize() in row.filter):
-            res[row.album[0]] = row.image[0]
+            res[row.album[0]] = {
+              "image": row.image[0],
+              "orientation": row.orientation.lower()
+            }
     # print(f"time to fetch: {time.process_time() - start}")
     return res
 
@@ -111,17 +115,14 @@ def get_album(album_name):
         if row.album[0] == album_name:
             res[row.id] = {
                 "text": row.text,
-                "description": row.description,
                 "image": row.image[0],
-                "album": row.album[0],
-                "filters": row.filter
+                "filters": row.filter,
+                "orientation": row.orientation.lower()
             }
 
     return res
 
 # get photos by filter
-
-
 @app.route('/api/filters/<filter_name>')
 @cross_origin()
 def get_filtered(filter_name):

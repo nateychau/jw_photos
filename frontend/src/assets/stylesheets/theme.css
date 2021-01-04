@@ -16,4 +16,22 @@ body {
   transition: opacity .2s ease-in-out;
 }
 
+html { 
+  scroll-behavior: smooth;
+}
 
+.fa-angle-double-up{
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  /* padding: 20px 20px; */
+  font-size: 32px; 
+  cursor: pointer;
+  color: #807e7e;
+  opacity: 0.2;
+  transition: opacity .2s ease-in;
+}
+
+.fa-angle-double-up:hover{
+  opacity: 0.6;
+}

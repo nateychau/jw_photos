@@ -12,12 +12,16 @@
 }
 
 .index-col{
+  max-width: 600px;
   width: 50%;
   display: flex;
   flex-direction: column; 
 }
 
 .photo-index .img-container{
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
   cursor: pointer;
 }
 

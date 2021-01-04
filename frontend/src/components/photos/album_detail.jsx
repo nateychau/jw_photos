@@ -35,12 +35,14 @@ export const AlbumPage = (props) => {
         if (data[album]["text"].length) text = data[album]["text"];
 
         let link = data[album]["image"];
+        let orientation = data[album]["orientation"];
         temp.push(
           <PhotoItem
             key={link}
             rowType={"album-row"}
             album={null}
             imgLink={link}
+            orientation={orientation}
           />
         );
       }

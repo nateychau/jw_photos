@@ -2,12 +2,23 @@
   margin-bottom: 10px;
 }
 
+.index-row > a {
+  display: flex; 
+  align-items: center;
+  flex-direction: column; 
+}
+
+
 .index-row.album-row {
   margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
 }
 
 .index-row h2 {
   font-size: 17px;
+  max-width: 50%;
+  padding-top: 20px;
 }
 
 .album-row h2 {
@@ -17,7 +28,7 @@
 }
 
 .col-left .cornered-row {
-  padding-right: 50px;
+  padding-right: 80px;
   padding-bottom: 60px;
 }
 
@@ -28,7 +39,7 @@
 }
 
 .col-right .cornered-row {
-  padding-left: 50px;
+  padding-left: 80px;
   padding-bottom: 60px;
 }
 
@@ -39,6 +50,20 @@
 }
 
 .index-row .img-container {
-  width: 100%;
   margin-bottom: 10px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.img-container.portrait {
+  width: 70%;
+}
+
+.album-row .img-container.portrait{
+  width: 60%;
+}
+
+.img-container.landscape {
+  width: 100%;
 }

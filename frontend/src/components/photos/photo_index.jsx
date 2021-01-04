@@ -21,13 +21,16 @@ export const PhotoIndex = ({ filter }) => {
       for (let album in data) {
         // if (filter && !data[album]["filters"].includes(filter)) continue; //may want to consider handling filtering elsewhere, or some other way. this does not scale
 
-        let link = data[album];
+        let link = data[album]["image"];
+        let orientation = data[album]["orientation"];
+
         temp.push(
           <PhotoItem
             key={i}
             rowType={i % 2 === 0 ? "cornered-row" : "centered-row"}
             album={album}
             imgLink={link}
+            orientation={orientation}
           />
         );
         i++;

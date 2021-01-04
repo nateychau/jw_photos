@@ -10,7 +10,7 @@ A photography portfolio website built with React, Flask, and Notion-py API. Phot
 
 ## About
 
-I designed this application flow for a use case where the website owner has litte to no experience with web hosting, development, CMS, etc. The Notion platform is simple to use, yet very flexible - a perfect tool for owners to manage their photos. Functionally, the site is static, and simply reads from a Notion table, but there are plenty of other use cases for using Notion .
+I designed this application flow for a use case where the website owner has litte to no experience with web hosting, development, CMS, etc. The Notion platform is simple to use, yet very flexible - a perfect tool for owners to manage their photos. Functionally, the site is static, and simply reads from a Notion table, but there are plenty of other use cases for using Notion.
 
 ### Connecting to Notion with notion-py
 
@@ -42,3 +42,5 @@ def check_for_flush():
 ### To-Do
 - Front end caching; The database is not updated frequently enough to warrant a network request on every page load. Considering pulling the entire table into a global store in the front end. 
 - Limit albums loaded on the index page; This would improve performance for tables with many different albums, and could even open up some new user cases. For example, this framework could be easily refactored into something more fitting for eCommerce, with Notion as an inventory management tool. 
+- Clean up views; There's a lot of stuff in the front end that I could've handled better, and I'll need to go back and refactor it eventually. I didn't take a mobile menu into account when first designing the component flow, and it introduced a lot of tricky stuff to work around when I finally added it. 
+- Apply different styling based on photo orientation; This one is pretty important. The styling as is right now makes portrait style photos 
