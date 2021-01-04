@@ -13,7 +13,7 @@
   
   .mobile-menu.closed{
     right: 29px;
-    top: 28px;
+    top: 40px;
   }
   
   .mobile-menu.open{
@@ -45,7 +45,7 @@
   .mobile-menu.open > div {
     position: absolute !important; 
     right: 29px; 
-    top: 28px;
+    top: 40px;
   }
 
 
