@@ -1,12 +1,17 @@
 # Notion-py Photography Portfolio 
 A photography portfolio website built with React, Flask, and Notion-py API. Photos are saved on a table in Notion for easy uploading and management.
 
-[Joann W Photos](http://joannwphotos.com/#/)
-
 - React front end, bundled with webpack
 - Flask back end forwarding requests to Notion API
   - Notion API accessed via [notion-py](https://github.com/jamalex/notion-py)
 - [Notion](https://www.notion.so/) for content management
+
+
+[Joann W Photos](http://joannwphotos.com/#/)
+
+![Desktop](https://raw.githubusercontent.com/nateychau/jw_photos/main/docs/jw_desktop.PNG) 
+
+![Mobile](https://raw.githubusercontent.com/nateychau/jw_photos/main/docs/jw_mobile.PNG) 
 
 ## About
 
@@ -43,4 +48,5 @@ def check_for_flush():
 - Front end caching; The database is not updated frequently enough to warrant a network request on every page load. Considering pulling the entire table into a global store in the front end. 
 - Limit albums loaded on the index page; This would improve performance for tables with many different albums, and could even open up some new user cases. For example, this framework could be easily refactored into something more fitting for eCommerce, with Notion as an inventory management tool. 
 - Clean up views; There's a lot of stuff in the front end that I could've handled better, and I'll need to go back and refactor it eventually. I didn't take a mobile menu into account when first designing the component flow, and it introduced a lot of tricky stuff to work around when I finally added it. 
-- Apply different styling based on photo orientation; This one is pretty important. The styling as is right now makes portrait style photos 
+- Set max widths for larger screens
+- Add responsiveness to window resizing
