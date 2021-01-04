@@ -45,6 +45,7 @@
 }
 
 .album-body p{
+  text-align: center;
   padding: 40px 0;
   width: 40%;
   color: #4a4b50;
