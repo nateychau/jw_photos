@@ -44,6 +44,14 @@ def check_for_flush():
     print('next flush date', time.localtime(flush_date))
 ```
 
+### Notion.so as a CMS 
+
+I'm a huge fan of [notion.so](https://www.notion.so/), and I'm excited to find a new use case for it. A Flask server for what could've easily been a simple static website is probably a bit overkill, but I think this is a proof of concept for more possibilities with Notion as a CMS. I plan on separating the server into a separate project to either serve or script reads to Notion for content to populate static websites pre-build. 
+
+![Table](https://raw.githubusercontent.com/nateychau/jw_photos/main/docs/jw_table.PNG)
+
+This is how the table the site reads from is organized. Notion-py's querrying currently requires a patch, so I did most of the filtering myself on the back end. 
+
 ### To-Do
 - Front end caching; The database is not updated frequently enough to warrant a network request on every page load. Considering pulling the entire table into a global store in the front end. 
 - Limit albums loaded on the index page; This would improve performance for tables with many different albums, and could even open up some new user cases. For example, this framework could be easily refactored into something more fitting for eCommerce, with Notion as an inventory management tool. 
