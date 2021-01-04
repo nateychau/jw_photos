@@ -1,5 +1,5 @@
 # Notion-py Photography Portfolio 
-A photography portfolio website built with React, Flask, and Notion-py API. Photos are saved on a table in Notion for easy uploading and management.
+A photography portfolio website built with React, Flask, and Notion-py API. Photos are saved on a table in Notion.so for easy uploading and management.
 
 - React front end, bundled with webpack
 - Flask back end forwarding requests to Notion API
