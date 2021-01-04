@@ -8,7 +8,7 @@ export const Body = () => {
   const [isLoading, setLoading] = useState(true);
 
    //TODO: add listener for window resizing
-   const isMobile = window.matchMedia("(max-width: 768px)");
+   const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   useEffect(() => {
     const fetchData = async () => {

@@ -121,6 +121,7 @@
   }
 
   .about-row p{
+    text-align: center;
     padding: 10px 0;
   }
 
@@ -134,6 +135,15 @@
 
   .col h2{
     padding-top: 20px;
+  }
+
+  .link-container{
+    padding-top: 10px;
+    /* align-self: flex-start */
+  }
+
+  .link-container p {
+    padding: 0 5px;
   }
 
   /*Footer*/

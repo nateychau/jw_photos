@@ -37,3 +37,27 @@
   line-height: 24px;
   color: #474747
 }
+
+.col .link-container {
+  display: flex;
+}
+
+.link-container {
+  margin-bottom: 10px;
+  color: #838383;
+}
+
+.link-container a{
+  transition: opacity .2s ease-in;
+  display: flex;
+  align-items: center;
+}
+
+.col a:hover{
+  opacity: 0.5;
+}
+
+.link-container p{
+  padding: 0 5px; 
+  color: #838383;
+}

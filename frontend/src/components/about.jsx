@@ -6,7 +6,7 @@ import { Hamburger } from "./hamburger";
 export const About = () => {
   const [page, setPage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const isMobile = window.matchMedia("(max-width: 768px)");
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ export const About = () => {
       let fragments = data["text"].map((text, i) => {
         return <p key={i}>{text}</p>;
       });
-      
+
       setPage({
         image: data["image"],
         text: fragments,
@@ -45,14 +45,33 @@ export const About = () => {
       <div className="about-row" style={{ opacity: isLoading ? 0 : 1 }}>
         <div className="col">
           <div className="img-container">
-            <img onLoad={() => setIsLoading(false)} src={page ? page.image : null} style={{ display: isLoading ? "none" : "block" }}></img>
+            <img
+              onLoad={() => setIsLoading(false)}
+              src={page ? page.image : null}
+              style={{ display: isLoading ? "none" : "block" }}
+            ></img>
           </div>
         </div>
-        {isLoading ? null :
-        <div className="col">
-          <h2>About</h2>
-          {page ? page.text: null}
-        </div>}
+        {isLoading ? null : (
+          <div className="col">
+            <h2>About</h2>
+            {page ? page.text : null}
+            <div className="link-container">
+              <a href="mailto:joannw.photos@gmail.com">
+                joannw.photos@gmail.com
+              </a>
+            </div>
+            <div className="link-container">
+              <a
+                href="https://www.instagram.com/joannwphotos/?hl=en"
+                target="_blank"
+              >
+                <i className="fab fa-instagram"></i>
+                <p>joannwphotos</p>
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

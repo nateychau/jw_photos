@@ -11,7 +11,7 @@ export const AlbumPage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [filters, setFilters] = useState([]);
-  const isMobile = window.matchMedia("(max-width: 768px)");
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   useEffect(() => {
     const fetchData = async () => {

@@ -3,7 +3,7 @@ import React from "react";
 export const Footer = () => (
   <div id="footer">
     <div>
-      Website by{" "}
+      Site by{" "}
       <a href="https://nychau.com/#/" target="_blank">
         Nathan Chau
       </a>
