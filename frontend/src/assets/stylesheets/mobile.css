@@ -1,0 +1,144 @@
+@media only screen and (max-width: 768px){
+  /*Hamburger menu*/
+  .menu-open{
+    overflow: hidden
+  }
+
+  .mobile-menu{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .mobile-menu.closed{
+    right: 29px;
+    top: 28px;
+  }
+  
+  .mobile-menu.open{
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+    z-index: 2;
+  }
+
+  .mobile-menu.open .mobile-menu-list {
+    transition: opacity 1s ease-in;
+  }
+
+  .mobile-menu.closed .mobile-menu-list{
+    pointer-events: none;
+  }
+  
+  .mobile-menu.open li {
+    padding: 10px 0; 
+    font-size: 24px; 
+  }
+
+  .mobile-menu.open > div {
+    position: absolute !important; 
+    right: 29px; 
+    top: 28px;
+  }
+
+
+  /*Header*/
+  .header a {
+    padding: 0 29px;
+  }
+
+  /*Body*/
+  .main-body{
+    padding: 10px 29px 0;
+  }
+
+  /* Photo Index */ 
+  .index-row h2{
+    font-size: 12px;
+  }
+
+  .col-left .cornered-row{
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+
+  .col-left .centered-row {
+    padding-left: 5px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+  }
+  
+  .col-right .cornered-row {
+    padding-left: 20px;
+    padding-bottom: 30px;
+  }
+  
+  .col-right .centered-row {
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-bottom: 20px;
+  }
+
+  /*Album detail*/
+  .album-body{
+    padding: 0 29px; 
+  }
+
+  .album-body h1{
+    font-size: 36px;
+  }
+
+  .album-body p{
+    width: 100%;
+  }
+
+  .album-body .index-col {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  /*About*/
+  .about-row {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 50px 30px;
+  }
+
+  .about-row .col {
+    width: 100%;
+    align-items: center;
+  }
+
+  .about-row .col:last-child {
+    padding-bottom: 25px;
+  }
+
+  .about-row p{
+    padding: 10px 0;
+  }
+
+  .about-row h2{
+    padding-bottom: 20px;
+  }
+
+  .about-row .img-container{
+    width: 100%;
+  }
+
+  .col h2{
+    padding-top: 20px;
+  }
+
+  /*Footer*/
+  #footer div{
+    font-size: 8px;
+  }
+
+}

@@ -3,6 +3,7 @@ import { PhotoItem } from "./photo_item";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
 import OnImagesLoaded from "react-on-images-loaded";
+import { Hamburger } from "../hamburger";
 
 export const AlbumPage = (props) => {
   const title = props.match.params.album;
@@ -10,6 +11,7 @@ export const AlbumPage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [text, setText] = useState("");
   const [filters, setFilters] = useState([]);
+  const isMobile = window.matchMedia("(max-width: 768px)");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +66,7 @@ export const AlbumPage = (props) => {
           transition: all 1s
         `}
       />
+      {isMobile ? <Hamburger topLink={"Home"} /> : null}
       {photos.length ? (
         <OnImagesLoaded
           onLoaded={() => setIsLoading(false)}

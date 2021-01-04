@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
+import { Hamburger } from "./hamburger";
 
 export const About = () => {
   const [page, setPage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const isMobile = window.matchMedia("(max-width: 768px)");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +41,7 @@ export const About = () => {
           transition: all 1s;
         `}
       />
+      {isMobile ? <Hamburger topLink={"Home"} /> : null}
       <div className="about-row" style={{ opacity: isLoading ? 0 : 1 }}>
         <div className="col">
           <div className="img-container">
