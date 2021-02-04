@@ -12,7 +12,9 @@ export const PhotoIndex = ({ filter }) => {
     const fetchData = async () => {
       setIsLoading(true); //will be used for a loading wheel when fetching
       setPhotos([]);
-      const url = `/api/covers${filter ? "/"+encodeURIComponent(filter) : ""}`; //apply filter to request if a filter was selected
+      const url = `/api/covers${
+        filter ? "/" + encodeURIComponent(filter) : ""
+      }`; //apply filter to request if a filter was selected
       const res = await fetch(url);
       const data = await res.json();
 
@@ -53,21 +55,22 @@ export const PhotoIndex = ({ filter }) => {
           left: 50%;
         `}
       />
-      {photos.length ? 
-      <OnImagesLoaded
-        onLoaded={() => setIsLoading(false)}
-        onTimeout={() => setIsLoading(false)}
-        timeout={7000}
-      >
-        <div className="photo-index" style={{ opacity: isLoading ? 0 : 1 }}>
-          <ul className="index-col col-left">
-            {photos.slice(0, photos.length / 2)}
-          </ul>
-          <ul className="index-col col-right">
-            {photos.slice(photos.length / 2, photos.length)}
-          </ul>
-        </div>
-      </OnImagesLoaded> : null}
+      {photos.length ? (
+        <OnImagesLoaded
+          onLoaded={() => setIsLoading(false)}
+          onTimeout={() => setIsLoading(false)}
+          timeout={7000}
+        >
+          <div className="photo-index" style={{ opacity: isLoading ? 0 : 1 }}>
+            <ul className="index-col col-left">
+              {photos.slice(0, photos.length / 2)}
+            </ul>
+            <ul className="index-col col-right">
+              {photos.slice(photos.length / 2, photos.length)}
+            </ul>
+          </div>
+        </OnImagesLoaded>
+      ) : null}
     </>
   );
 };

@@ -25,7 +25,7 @@ def get_about():
 
 cv = client.get_collection_view(f"https://www.notion.so/{config.TABLE_KEY}")
 cache = cv.collection.get_rows()
-flush_date = time.time() + 5#604800  # 1 week from now
+flush_date = time.time() + 604800  # 1 week from now
 
 #collection is cached on the server on start up, and refreshed once a week
 # if its been a week since we last made a request directly to notion,
@@ -40,7 +40,7 @@ def check_for_flush():
         cv.refresh() #refresh the collection and save to cache
         global cache
         cache = cv.collection.get_rows()
-        flush_date = time.time() + 5#604800
+        flush_date = time.time() + 604800
     else:
         print('did not flush')
     # print('next flush date', time.localtime(flush_date))
