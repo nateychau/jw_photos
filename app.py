@@ -7,6 +7,18 @@ from python_util.about import About
 # for cache refreshing
 import time
 
+#BEGIN MONKEY PATCH 
+import notion 
+def store_recordmap(self, recordmap):
+    for table, records in recordmap.items():
+        if records is None: continue
+        for id, record in records.items():
+            self._update_record(
+                table, id, value=record.get("value"), role=record.get("role")
+            )
+notion.store.RecordStore.store_recordmap = store_recordmap
+#END MONKEY PATCH
+
 app = Flask(__name__, static_folder="./frontend", static_url_path="/")
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
