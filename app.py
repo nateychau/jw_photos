@@ -16,11 +16,30 @@ def store_recordmap(self, recordmap):
             self._update_record(
                 table, id, value=record.get("value"), role=record.get("role")
             )
+
+def call_load_page_chunk(self, page_id):
+
+        if self._client.in_transaction():
+            self._pages_to_refresh.append(page_id)
+            return
+
+        data = {
+            "pageId": page_id,
+            "limit": 100,
+            "cursor": {"stack": []},
+            "chunkNumber": 0,
+            "verticalColumns": False,
+        }
+
+        recordmap = self._client.post("loadPageChunk", data).json()["recordMap"]
+
+        self.store_recordmap(recordmap)
+
+notion.store.RecordStore.call_load_page_chunk = call_load_page_chunk
 notion.store.RecordStore.store_recordmap = store_recordmap
 #END MONKEY PATCH
 
 app = Flask(__name__, static_folder="./frontend", static_url_path="/")
-cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # this can probably replace the timed cache implemented below
