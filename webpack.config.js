@@ -7,6 +7,10 @@ module.exports = {
     filename: "./frontend/bundle.js",
   },
   devtool: "source-map",
+  devServer: {
+    host: 'http://localhost/',
+    port: 5000,
+  },
   module: {
     rules: [
       {

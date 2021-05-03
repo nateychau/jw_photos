@@ -50,6 +50,7 @@ export const AlbumPage = (props) => {
       setPhotos(temp);
       setText(text);
       setFilters(tempFilters);
+      setIsLoading(false);
     };
 
     fetchData();

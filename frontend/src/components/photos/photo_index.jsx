@@ -39,6 +39,7 @@ export const PhotoIndex = ({ filter }) => {
       }
 
       setPhotos(temp);
+      setIsLoading(false);
     };
 
     fetchData();

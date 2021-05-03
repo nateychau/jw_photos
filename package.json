@@ -15,11 +15,13 @@
     "react-on-images-loaded": "^2.2.5",
     "react-router-dom": "^5.2.0",
     "react-spinners": "^0.10.4",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "styled-components": "^5.2.3",
+    "webpack": "^4.46.0"
   },
   "proxy": "http://localhost:5000",
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-cli": "^3.3.12"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --mode=development --watch",
