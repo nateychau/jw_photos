@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-const AppContext = React.createContext()
+const AppContext = React.createContext();
 
 // wip
 
@@ -16,12 +16,16 @@ export function AppProvider({ children }) {
       const res = await fetch(GET_ALL_URL);
       const data = await res.json();
       setPhotos(data);
-    }
+      setIsLoading(false);
+    };
+    fetchData();
   }, []);
 
-  <AppContext.Provider value={{ photos }}>
+  return (
+    <AppContext.Provider value={{ photos, isLoading }}>
       {children}
-  </AppContext.Provider>
-} 
+    </AppContext.Provider>
+  );
+}
 
 export default AppContext;

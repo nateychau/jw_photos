@@ -104,7 +104,7 @@ def get_all():
             "album": row.album,
             "filters": row.filter,
             "image": row.image,
-            "album cover": row.album_cover,
+            "album_cover": row.album_cover,
             "orientation": row.orientation
         }
     
